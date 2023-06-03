@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Formulario from "./components/Formulario";
 import List from "./components/List";
 //import NoControlado from "./components/NoControlado"
@@ -21,10 +21,15 @@ const objectList = [
    }
 
 ]
+const initialList = JSON.parse(localStorage.getItem('list'))  || []
 
 const App = () => {
 
-   const [list, setlist] = useState(objectList)
+   const [list, setlist] = useState(initialList)
+
+   useEffect(() => {
+      localStorage.setItem('list', JSON.stringify(list)) //cada vez que se inicie se va a guardar una vez la lista cómo string en el navegador
+   }, [list])
 
    const addlist = newlist => {
       setlist([...list, newlist])
